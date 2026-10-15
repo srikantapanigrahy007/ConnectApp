@@ -1,0 +1,113 @@
+@import 'tailwindcss';
+
+/*
+ * Connect design tokens — Soft Violet on neutral surfaces.
+ *
+ * Contrast (WCAG 2.2):
+ *   ink (#1e293b) on canvas ........ 14:1     ink-muted (#475569) on canvas ... 7.2:1
+ *   white on primary-600 ........... 5.3:1    primary-700 on white ............ 7.2:1
+ *   success-700 on success-50 ...... 5.2:1    warning-800 on warning-50 ....... 7.0:1
+ *   danger-700 on danger-50 ........ 5.9:1    white on danger-600 ............. 4.8:1
+ *   border-strong (form controls) on white ≥ 3:1 (non-text contrast, 1.4.11)
+ */
+@theme {
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+  /* Soft violet */
+  --color-primary-50: #f6f3ff;
+  --color-primary-100: #ede8ff;
+  --color-primary-200: #ddd4fe;
+  --color-primary-300: #c4b5fd;
+  --color-primary-400: #a78bfa;
+  --color-primary-500: #8b6cf0;
+  --color-primary-600: #7350e0;
+  --color-primary-700: #5f3dc4;
+  --color-primary-800: #4e339e;
+  --color-primary-900: #42307d;
+  --color-primary-950: #2a1b54;
+
+  /* Neutral surfaces, dark slate text, subtle gray borders */
+  --color-canvas: #f7f7f8;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f1f2f4;
+  --color-border: #e4e4e7;
+  --color-border-strong: #8f8f98;
+  --color-ink: #1e293b;
+  --color-ink-muted: #475569;
+  --color-ink-subtle: #64748b;
+
+  /* Landing hero (all stopped by prefers-reduced-motion): background rows drifting sideways,
+     the headline rising into place and its highlight sweeping in. */
+  --animate-marquee: marquee 150s linear infinite;
+  --animate-rise: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-underline: underline 0.8s 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+  }
+  @keyframes underline {
+    from {
+      transform: scaleX(0);
+    }
+  }
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* Status */
+  --color-success-50: #ecfdf5;
+  --color-success-200: #a7f3d0;
+  --color-success-500: #10b981;
+  --color-success-700: #047857;
+  --color-warning-50: #fffbeb;
+  --color-warning-200: #fde68a;
+  --color-warning-500: #f59e0b;
+  --color-warning-800: #92400e;
+  --color-danger-50: #fef2f2;
+  --color-danger-200: #fecaca;
+  --color-danger-600: #dc2626;
+  --color-danger-700: #b91c1c;
+}
+
+/* Hides a scroll container's scrollbar; wheel, touch and keyboard scrolling still work. */
+@utility scrollbar-none {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+  }
+
+  body {
+    @apply bg-canvas font-sans text-ink antialiased;
+  }
+
+  /* One visible, consistent focus indicator for every interactive element (keyboard only). */
+  :focus-visible {
+    outline: 2px solid var(--color-primary-600);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
